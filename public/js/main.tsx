@@ -1,10 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 
-const MainComponent = (): JSX.Element => {
-    return (
-    <div>Weather dashboard</div>
-    );
-}
+import CityList from 'components/CityList';
+import CityForecast from 'components/CityForecast';
 
-ReactDOM.render(<MainComponent />, document.getElementById('container'));
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <CityList />,
+  },
+  {
+    path: "/forecast/:lat/:lon",
+    element: <CityForecast />,
+  },
+]);
+
+ReactDOM.render(<RouterProvider router={router} />, document.getElementById('container'));
