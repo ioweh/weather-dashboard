@@ -1,0 +1,22 @@
+@result-width: 500px;
+
+.searchResult {
+    border-bottom: 1px solid gray;
+    width: @result-width;
+    align-self: center;
+    padding: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
+@media only screen and (hover: none) and (pointer: coarse) and (orientation:portrait) {
+    .searchResult {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .searchResult {
+        width: 100%;
+    }
+}

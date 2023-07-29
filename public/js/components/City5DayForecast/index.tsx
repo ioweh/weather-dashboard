@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+import './index.less';
+
 const CityForecast = (): JSX.Element => {
     const { lat, lon } = useParams();
     const [forecastData, setForecastData] = useState<any>({});

@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
+import './index.less';
+import SearchResult from '../SearchResult';
+
 const CityList = (): JSX.Element => {
     const [citiesWithForecast, setCitiesWithForecast] = useState<any>([]);
     const [cityName, setCityName] = useState("London");
@@ -28,7 +31,7 @@ const CityList = (): JSX.Element => {
             console.error('Geolocation is not supported by this browser.');
         }
     };
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -50,24 +53,22 @@ const CityList = (): JSX.Element => {
     }, [cityName, latitude, longitude]);
 
     return (
-    <>
-    <input
-    type="text"
-    placeholder="Search"
-    value={cityName}
-    onChange={(e) => setCityName(e.target.value)} />
-    <ul>
-        {citiesWithForecast.map(cityWithForecast => 
-            <li
-            key={cityWithForecast.lat * cityWithForecast.lon}>
-                <Link
-                to={`forecast/${cityWithForecast.lat}/${cityWithForecast.lon}`}>
-                    {cityWithForecast.name}
-                </Link>
-            </li>
+    <div className="weather">
+        <span className='weather__header'>Find weather in your city</span>
+        <span className='weather__search'>
+            <input
+            type="text"
+            placeholder="Search"
+            value={cityName}
+            className='weather__search__input'
+            onChange={(e) => setCityName(e.target.value)} />
+        </span>
+        {citiesWithForecast.map(cityWithForecast =>
+        <SearchResult
+            key={cityWithForecast.lat * cityWithForecast.lon}
+            cityWithForecast={cityWithForecast}/>
         )}
-    </ul>
-    </>
+    </ div>
     );
 }
 

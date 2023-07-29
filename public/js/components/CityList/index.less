@@ -1,0 +1,24 @@
+@search-color: orange;
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  
+  &__header {
+    text-align: center;
+    padding: 20px;
+    font-size: x-large;
+  }
+  
+  &__search {
+    padding: 20px;
+    background-color: @search-color;
+    text-align: center;
+    
+    &__input {
+      border-radius: 15px;
+      padding: 5px 10px;
+    }
+  }
+}
+
