@@ -37,6 +37,7 @@ const CityForecast = (): JSX.Element => {
     return (
         <>
         <div>
+            <h1>Weather in {forecastData.city?.name}, {forecastData.city?.country}</h1>
             {forecastData.list && forecastData.list.map(forecast => 
             <li key={forecast.dt}>
                 <>
