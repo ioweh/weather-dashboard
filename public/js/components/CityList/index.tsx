@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const CityList = (): JSX.Element => {
     const [citiesWithForecast, setCitiesWithForecast] = useState<any>([]);
     const [cityName, setCityName] = useState("London");
+
     let url = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=b35ef7587dfa519e18d36e86584481a2`;
     
     useEffect(() => {
@@ -31,8 +32,7 @@ const CityList = (): JSX.Element => {
     <ul>
         {citiesWithForecast.map(cityWithForecast => 
             <li
-            key={cityWithForecast.lat * cityWithForecast.lon}
-            onClick={() => console.log('hi')}>
+            key={cityWithForecast.lat * cityWithForecast.lon}>
                 <Link
                 to={`forecast/${cityWithForecast.lat}/${cityWithForecast.lon}`}>
                     {cityWithForecast.name}

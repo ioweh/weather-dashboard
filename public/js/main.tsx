@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 
 import CityList from 'components/CityList';
-import CityForecast from 'components/CityForecast';
+import CityForecast from 'components/City5DayForecast';
 
 const router = createBrowserRouter([
   {
