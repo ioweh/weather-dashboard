@@ -19,7 +19,7 @@ const CityForecast = (): JSX.Element => {
         // Convert Kelvin to Celsius
         const celsius = kelvin - 273.15;
         
-        return celsius.toFixed(1);
+        return `${celsius.toFixed(1)}°C`;
     }
     
     useEffect(() => {
@@ -27,6 +27,7 @@ const CityForecast = (): JSX.Element => {
             try {
                 const response = await axios.get(url);
                 setForecastData(response.data);
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -37,20 +38,24 @@ const CityForecast = (): JSX.Element => {
 
     return (
         <>
-        <div>
-            <h1>Weather in {name ?? forecastData.city?.name}, {country ?? forecastData.city?.country}</h1>
-            {forecastData.list && forecastData.list.map(forecast => 
-            <li key={forecast.dt}>
-                <>
-                <div>{forecast.dt_txt}</div>
-                <div>Temperature: {kelvinToCelsius(forecast.main?.temp)}</div>
-                <div>Humidity: {forecast.main?.humidity}%</div>
-                <div>Description: {forecast.weather[0]?.description}</div>
-                <img src={`https://openweathermap.org/img/wn/${forecast.weather[0]?.icon}@2x.png`} />
-                </>
-            </li>
-            )}
-        </div> 
+            {forecastData.list &&
+            <div className='forecast'>
+                <div className='forecast__content'>
+                    <h1 className='forecast__content__name'>{name ?? forecastData.city?.name}</h1>
+                    <div className='forecast__content__date'>{forecastData.list[0].dt_txt}</div>
+                    <img
+                    src={`https://openweathermap.org/img/wn/${forecastData.list[0].weather[0]?.icon}@2x.png`}
+                    className='forecast__content__picture'/>
+                    <div className='forecast__content__temperature'>{kelvinToCelsius(forecastData.list[0].main?.temp)}</div>
+                    <div className='forecast__content__description'>{forecastData.list[0].weather[0]?.description}</div>
+                </div>
+                <div className='forecast__footer'>
+                    <div>{forecastData.list[0].main?.humidity}</div>
+                    <div>{forecastData.list[0].wind.speed}</div>
+                    <div>{forecastData.list[0].main?.pressure}</div>
+                </div>
+            </div>
+            }
         </>
     )
 }
