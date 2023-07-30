@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './index.less';
 import { useNavigate } from 'react-router-dom';
 
-const SearchResult = ({cityWithForecast}): JSX.Element => {
+const SearchResult = ({cityWithForecast, addToFavorites}): JSX.Element => {
     const { lat, lon, name, country} = cityWithForecast;
     const navigate = useNavigate();
 
@@ -15,11 +15,20 @@ const SearchResult = ({cityWithForecast}): JSX.Element => {
         navigate(`forecast/${lat}/${lon}/${name}/${country}`)
     }
 
+    const handleFavClick = (e) => {
+        e.stopPropagation();
+        addToFavorites(name, country, lat, lon);
+    };
+
     return (
     <div
     onClick={city5DayForecastPage}
     className='searchResult'>
-        {name}, {country} ({formatCoords(lat)}, {formatCoords(lon)})
+        <span>{name}, {country} ({formatCoords(lat)}, {formatCoords(lon)})</span>
+        <img 
+        src='/gold_star.svg'
+        className='searchResult__favorite'
+        onClick={handleFavClick} />
     </div>
     )
 }
