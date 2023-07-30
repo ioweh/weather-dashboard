@@ -1,4 +1,5 @@
 @search-color: orange;
+@mobile-font-size: 2rem;
 
 .weather {
   display: flex;
@@ -22,3 +23,18 @@
   }
 }
 
+@media only screen and (hover: none) and (orientation: portrait), (pointer: coarse) or (pointer: none) {
+    .weather {
+        font-size: @mobile-font-size;
+
+        &__header {
+          font-size: @mobile-font-size;
+        }
+
+        &__search {
+          &__input {
+            font-size: @mobile-font-size;
+          }
+        }
+    }
+}

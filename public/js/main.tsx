@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     element: <CityList />,
   },
   {
-    path: "/forecast/:lat/:lon",
+    path: "/forecast/:lat/:lon/:name/:country",
     element: <CityForecast />,
   },
 ]);

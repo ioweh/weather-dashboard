@@ -5,7 +5,7 @@ import axios from 'axios';
 import './index.less';
 
 const CityForecast = (): JSX.Element => {
-    const { lat, lon } = useParams();
+    const { lat, lon, name, country } = useParams();
     const [forecastData, setForecastData] = useState<any>({});
     
     let url = `https://api.openweathermap.org/data/2.5/forecast/?lat=${lat}&lon=${lon}&appid=b35ef7587dfa519e18d36e86584481a2`;
@@ -39,7 +39,7 @@ const CityForecast = (): JSX.Element => {
     return (
         <>
         <div>
-            <h1>Weather in {forecastData.city?.name}, {forecastData.city?.country}</h1>
+            <h1>Weather in {name}, {country}</h1>
             {forecastData.list && forecastData.list.map(forecast => 
             <li key={forecast.dt}>
                 <>

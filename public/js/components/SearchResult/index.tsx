@@ -12,7 +12,7 @@ const SearchResult = ({cityWithForecast}): JSX.Element => {
     }
 
     const city5DayForecastPage = () => {
-        navigate(`forecast/${lat}/${lon}`)
+        navigate(`forecast/${lat}/${lon}/${name}/${country}`)
     }
 
     return (
