@@ -50,7 +50,7 @@ const CityList = (): JSX.Element => {
         }
         
         fetchData(); // Call the async function to fetch data when the component mounts
-    }, [cityName, latitude, longitude]);
+    }, [cityName]);
 
     return (
     <div className="weather">
@@ -63,9 +63,9 @@ const CityList = (): JSX.Element => {
             className='weather__search__input'
             onChange={(e) => setCityName(e.target.value)} />
         </span>
-        {citiesWithForecast.map(cityWithForecast =>
+        {citiesWithForecast.map((cityWithForecast, index) =>
         <SearchResult
-            key={cityWithForecast.lat * cityWithForecast.lon}
+            key={index * cityWithForecast.lat * cityWithForecast.lon}
             cityWithForecast={cityWithForecast}/>
         )}
     </ div>
