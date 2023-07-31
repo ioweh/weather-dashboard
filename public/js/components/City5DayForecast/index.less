@@ -1,7 +1,11 @@
+@icon-height: 3rem;
+@weather-description-distance: 1rem;
+
 /* styles.less */
 .forecast {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 
   &__content {
     display: flex;
@@ -15,38 +19,59 @@
 
     &__date {
       flex: 1;
+      font-size: x-large;
     }
 
     &__picture {
       width: 300px;
-      flex: 1;
+      cursor: pointer;
     }
 
     &__temperature {
       flex: 1;
+      font-size: xx-large;
+      margin-bottom: 2rem;
     }
 
     &__description {
       flex: 1;
+      font-size: x-large;
     }
   }
   &__footer{
     display: flex;
     text-align: center;
-    border-top: 1px dashed gray;
     margin-top: 20px;
     padding: 20px;
+    font-size: x-large;
 
     &__humidity {
       flex: 1;
+
+      &__picture {
+        height: @icon-height;
+        margin-bottom: @weather-description-distance;
+      }
     }
 
     &__wind-speed {
       flex: 1;
+      border-right: 1px dashed gray;
+      border-left: 1px dashed gray;
+
+      &__picture {
+        height: @icon-height;
+        margin-bottom: @weather-description-distance;
+      }
     }
 
     &__pressure {
       flex: 1;
+
+      &__picture {
+        height: @icon-height;
+        margin-bottom: @weather-description-distance;
+      }
     }
   }
 }
