@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Carousel from 'better-react-carousel'
 
 import './index.less';
 
@@ -39,22 +40,26 @@ const CityForecast = (): JSX.Element => {
     return (
         <>
             {forecastData.list &&
+            <Carousel>
+                {forecastData.list.filter(forecast => forecast.dt_txt.endsWith(forecastData.list[0].dt_txt.slice(-8))).map(forecast => <Carousel.Item>
             <div className='forecast'>
                 <div className='forecast__content'>
                     <h1 className='forecast__content__name'>{name ?? forecastData.city?.name}</h1>
-                    <div className='forecast__content__date'>{forecastData.list[0].dt_txt}</div>
+                    <div className='forecast__content__date'>{forecast.dt_txt}</div>
                     <img
-                    src={`https://openweathermap.org/img/wn/${forecastData.list[0].weather[0]?.icon}@2x.png`}
+                    src={`https://openweathermap.org/img/wn/${forecast.weather[0]?.icon}@2x.png`}
                     className='forecast__content__picture'/>
-                    <div className='forecast__content__temperature'>{kelvinToCelsius(forecastData.list[0].main?.temp)}</div>
-                    <div className='forecast__content__description'>{forecastData.list[0].weather[0]?.description}</div>
+                    <div className='forecast__content__temperature'>{kelvinToCelsius(forecast.main?.temp)}</div>
+                    <div className='forecast__content__description'>{forecast.weather[0]?.description}</div>
                 </div>
                 <div className='forecast__footer'>
-                    <div>{forecastData.list[0].main?.humidity}</div>
-                    <div>{forecastData.list[0].wind.speed}</div>
-                    <div>{forecastData.list[0].main?.pressure}</div>
+                    <div>{forecast.main?.humidity}</div>
+                    <div>{forecast.wind.speed}</div>
+                    <div>{forecast.main?.pressure}</div>
                 </div>
             </div>
+            </Carousel.Item>)}
+            </Carousel>
             }
         </>
     )
