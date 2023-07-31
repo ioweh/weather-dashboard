@@ -22,6 +22,11 @@ const CityForecast = (): JSX.Element => {
         
         return `${celsius.toFixed(1)}°C`;
     }
+
+    function isIn24HoursInterval(city, currentCity) {
+        // e.q., the date time ends in 00:00:00; we find all the similar forecasts
+        return city.dt_txt.endsWith(currentCity.dt_txt.slice(-8));
+    }
     
     useEffect(() => {
         const fetchData = async () => {
@@ -41,7 +46,7 @@ const CityForecast = (): JSX.Element => {
         <>
             {forecastData.list &&
             <Carousel>
-                {forecastData.list.filter(forecast => forecast.dt_txt.endsWith(forecastData.list[0].dt_txt.slice(-8))).map(forecast => <Carousel.Item>
+                {forecastData.list.filter(forecast => isIn24HoursInterval(forecast, forecastData.list[0])).map(forecast => <Carousel.Item>
             <div className='forecast'>
                 <div className='forecast__content'>
                     <h1 className='forecast__content__name'>{name ?? forecastData.city?.name}</h1>
