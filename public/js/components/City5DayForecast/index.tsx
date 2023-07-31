@@ -58,9 +58,9 @@ const CityForecast = (): JSX.Element => {
                     <div className='forecast__content__description'>{forecast.weather[0]?.description}</div>
                 </div>
                 <div className='forecast__footer'>
-                    <div>{forecast.main?.humidity}</div>
-                    <div>{forecast.wind.speed}</div>
-                    <div>{forecast.main?.pressure}</div>
+                    <div className='forecast__footer__humidity'><div>Humidity:</div><div>{forecast.main?.humidity}</div></div>
+                    <div className='forecast__footer__wind-speed'><div>Wind:</div><div>{forecast.wind.speed}</div></div>
+                    <div className='forecast__footer__pressure'><div>Pressure</div><div>{forecast.main?.pressure}</div></div>
                 </div>
             </div>
             </Carousel.Item>)}
