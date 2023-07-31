@@ -80,7 +80,7 @@ const CityList = (): JSX.Element => {
         loadLocalCities();
         
         fetchData(); // Call the async function to fetch data when the component mounts
-    }, [cityName]);
+    }, [cityName, latitude, longitude]);
 
     return (
     <div className="weather">
