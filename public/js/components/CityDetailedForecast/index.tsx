@@ -30,94 +30,75 @@ const CityDetailedForecast = (): JSX.Element => {
     // get detailed forecast
     const { oneDayForecast, cityName } = location.state;
 
-    const temperatureOptions = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top' as const,
-            },
-            title: {
-                display: true,
-                text: 'Temperature, °C',
-            },
-        },
-    };
+    const temperatureColor = 'rgba(255, 99, 132, 0.5)';
+    const humidityColor = 'rgba(140, 155, 181, 0.5)';
+    const windColor = 'rgba(171, 185, 162, 0.5)';
 
-    const humidityOptions = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top' as const,
+    const createChartOptions = (header) => {
+        return {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top' as const,
+                },
+                title: {
+                    display: true,
+                    text: header,
+                },
             },
-            title: {
-                display: true,
-                text: 'Humidity, %',
-            },
-        },
-    };
+        }
+    }
 
-    const windOptions = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top' as const,
-            },
-            title: {
-                display: true,
-                text: 'Wind, m/s',
-            },
-        },
-    };
+    const createChartData = (data, backgroundColor) => {
+        return {
+            labels,
+            datasets: [
+                {
+                    label: cityName,
+                    data,
+                    backgroundColor,
+                }
+            ]
+        }
+    }
+
+    const temperatureOptions = createChartOptions('Temperature, °C')
+
+    const humidityOptions = createChartOptions('Humidity, %');
+
+    const windOptions = createChartOptions('Wind, m/s');
 
     const labels = oneDayForecast.map(forecast => forecast.dt_txt);
-    
-    const temperatureData = {
-        labels,
-        datasets: [
-            {
-                label: cityName,
-                data: oneDayForecast.map(forecast => kelvinToCelsius(forecast.main.temp)),
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-        ],
-    };
 
-    const humidityData = {
-        labels,
-        datasets: [
-            {
-                label: cityName,
-                data: oneDayForecast.map(forecast => forecast.main.humidity),
-                backgroundColor: 'rgba(140, 155, 181, 0.5)',
-            }
-        ]
-    }
+    const temperatureData = createChartData(
+        oneDayForecast.map(forecast => kelvinToCelsius(forecast.main.temp)),
+        temperatureColor,
+    )
 
-    const windData = {
-        labels,
-        datasets: [
-            {
-                label: cityName,
-                data: oneDayForecast.map(forecast => forecast.wind.speed),
-                backgroundColor: 'rgba(171, 185, 162, 0.5)',
-            }
-        ]
-    }
+    const humidityData = createChartData(
+        oneDayForecast.map(forecast => forecast.main.humidity),
+        humidityColor,
+    );
+
+    const windData = createChartData(
+        oneDayForecast.map(forecast => forecast.wind.speed),
+        windColor,
+    );
 
     const tabsData = [
-    {
-      label: 'Temperature',
-      content: <Bar options={temperatureOptions} data={temperatureData} />,
-    },
-    {
-      label: 'Humidity',
-      content: <Bar options={humidityOptions} data={humidityData} />,
-    },
-    {
-      label: 'Wind',
-      content: <Bar options={windOptions} data={windData} />,
-    },
-  ];
+        {
+            label: 'Temperature',
+            content: <Bar options={temperatureOptions} data={temperatureData} />,
+        },
+        {
+            label: 'Humidity',
+            content: <Bar options={humidityOptions} data={humidityData} />,
+        },
+        {
+            label: 'Wind',
+            content: <Bar options={windOptions} data={windData} />,
+        },
+    ];
 
     return (
         <TabsComponent tabsData={tabsData} />
