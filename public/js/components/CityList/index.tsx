@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import './index.less';
 import SearchResult from '../SearchResult';
+import FavoriteCity from '../FavoriteCity';
 
 
 const CityList = (): JSX.Element => {
@@ -88,14 +89,10 @@ const CityList = (): JSX.Element => {
         <span className='weather__header'>Find weather in your city</span>
         <span className='weather__favorites'>
             {favoriteCities.map(fav => 
-                <span
-                className='weather__favorites__item'
-                onClick={() => navigate(`forecast/${fav.latitude}/${fav.longitude}/${fav.city}/${fav.country}`)}>
-                    {fav.city}, {fav.country}
-                    <span
-                    className='weather__favorites__item__close'
-                    onClick={e => removeFromFavorites(e, fav)}>x</span>
-                </span>
+            <FavoriteCity
+              favorite={fav}
+              removeFromFavorites={removeFromFavorites}
+            />
             )}
         </span>
         <span className='weather__search'>
