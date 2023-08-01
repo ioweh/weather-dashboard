@@ -27,7 +27,7 @@ const CityDetailedForecast = (): JSX.Element => {
     const location = useLocation();
 
     // get detailed forecast
-    const data = location.state;
+    const { forecastData, cityName } = location.state;
 
     function kelvinToCelsius(kelvin) {
         // Check if the input is a valid number
@@ -80,14 +80,14 @@ const CityDetailedForecast = (): JSX.Element => {
         },
     };
 
-    const labels = data.list.map(forecast => forecast.dt_txt);
+    const labels = forecastData.list.map(forecast => forecast.dt_txt);
     
     const temperatureData = {
         labels,
         datasets: [
             {
-                label: data.city?.name,
-                data: data.list.map(forecast => kelvinToCelsius(forecast.main.temp)),
+                label: cityName,
+                data: forecastData.list.map(forecast => kelvinToCelsius(forecast.main.temp)),
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
         ],
@@ -97,8 +97,8 @@ const CityDetailedForecast = (): JSX.Element => {
         labels,
         datasets: [
             {
-                label: data.city?.name,
-                data: data.list.map(forecast => forecast.main.humidity),
+                label: cityName,
+                data: forecastData.list.map(forecast => forecast.main.humidity),
                 backgroundColor: 'rgba(140, 155, 181, 0.5)',
             }
         ]
@@ -108,8 +108,8 @@ const CityDetailedForecast = (): JSX.Element => {
         labels,
         datasets: [
             {
-                label: data.city?.name,
-                data: data.list.map(forecast => forecast.wind.speed),
+                label: cityName,
+                data: forecastData.list.map(forecast => forecast.wind.speed),
                 backgroundColor: 'rgba(171, 185, 162, 0.5)',
             }
         ]

@@ -31,7 +31,12 @@ const CityForecast = (): JSX.Element => {
     }
 
     function cityDetailsPage() {
-        navigate("/city-details", {state: forecastData});
+        navigate("/city-details", {state:
+            {
+                forecastData,
+                cityName: name ?? forecastData.city?.name,
+            }
+        });
     }
     
     useEffect(() => {
