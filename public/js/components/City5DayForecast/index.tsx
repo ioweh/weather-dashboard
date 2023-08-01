@@ -7,14 +7,14 @@ import './index.less';
 import { kelvinToCelsius } from '../../utils';
 
 const CityForecast = (): JSX.Element => {
-    const { lat, lon, name, country } = useParams();
+    const { lat, lon, name } = useParams();
     const [forecastData, setForecastData] = useState<any>({});
     
     let url = `https://api.openweathermap.org/data/2.5/forecast/?lat=${lat}&lon=${lon}&appid=b35ef7587dfa519e18d36e86584481a2`;
 
     const navigate = useNavigate();
 
-    const isIn24HoursInterval = (city, currentCity) => {
+    const is24HoursAhead = (city, currentCity) => {
         // e.q., the date time ends in 00:00:00; we find all the similar forecasts
         return city.dt_txt.endsWith(currentCity.dt_txt.slice(-8));
     }
@@ -43,20 +43,20 @@ const CityForecast = (): JSX.Element => {
         
         fetchData(); // Call the async function to fetch data when the component mounts
     }, []);
-
+    
     return (
-        <>
-            {forecastData.list &&
-            <Carousel>
-                {forecastData.list.filter(forecast => isIn24HoursInterval(forecast, forecastData.list[0])).map(forecast => <Carousel.Item>
+    <>
+    {forecastData.list &&
+    <Carousel>
+        {forecastData.list.filter(forecast => is24HoursAhead(forecast, forecastData.list[0])).map(forecast => <Carousel.Item>
             <div className='forecast'>
                 <div className='forecast__content'>
                     <h1 className='forecast__content__name'>{name ?? forecastData.city?.name}</h1>
                     <div className='forecast__content__date'>{forecast.dt_txt}</div>
                     <img
-                    onClick={() => cityDetailsPage(forecast)}
-                    src={`https://openweathermap.org/img/wn/${forecast.weather[0]?.icon}@2x.png`}
-                    className='forecast__content__picture'/>
+                        onClick={() => cityDetailsPage(forecast)}
+                        src={`https://openweathermap.org/img/wn/${forecast.weather[0]?.icon}@2x.png`}
+                        className='forecast__content__picture'/>
                     <div className='forecast__content__temperature'>{kelvinToCelsius(forecast.main?.temp)}°C</div>
                     <div className='forecast__content__description'>{forecast.weather[0]?.description}</div>
                 </div>
@@ -79,9 +79,8 @@ const CityForecast = (): JSX.Element => {
                 </div>
             </div>
             </Carousel.Item>)}
-            </Carousel>
-            }
-        </>
+    </Carousel>}
+    </>
     )
 }
 
