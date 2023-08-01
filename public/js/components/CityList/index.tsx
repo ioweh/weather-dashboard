@@ -36,7 +36,7 @@ const CityList = (): JSX.Element => {
         }
     };
 
-    const loadLocalCities = () => {
+    const loadStoredCities = () => {
         const storedCities = localStorage.getItem(storageKey);
         if (storedCities) {
             setFavoriteCities(JSON.parse(storedCities));
@@ -77,7 +77,7 @@ const CityList = (): JSX.Element => {
             goTo5DayForecastPage();
         }
 
-        loadLocalCities();
+        loadStoredCities();
         
         fetchData(); // Call the async function to fetch data when the component mounts
     }, [cityName, latitude, longitude]);
