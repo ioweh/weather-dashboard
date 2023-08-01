@@ -1,7 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './index.less';
-import { useNavigate } from 'react-router-dom';
+
 
 const SearchResult = ({cityWithForecast, addToFavorites}): JSX.Element => {
     const { lat, lon, name, country} = cityWithForecast;

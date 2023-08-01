@@ -24,6 +24,7 @@ import TabsComponent from '../TabsComponent';
 import './index.less';
 import { kelvinToCelsius } from '../../utils';
 
+
 const CityDetailedForecast = (): JSX.Element => {
     const location = useLocation();
 

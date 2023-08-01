@@ -6,6 +6,7 @@ import Carousel from 'better-react-carousel'
 import './index.less';
 import { kelvinToCelsius } from '../../utils';
 
+
 const CityForecast = (): JSX.Element => {
     const { lat, lon, name } = useParams();
     const [forecastData, setForecastData] = useState<any>({});

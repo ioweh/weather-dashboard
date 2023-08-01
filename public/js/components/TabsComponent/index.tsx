@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import './index.less';
+
 
 const TabsComponent = ({ tabsData }) => {
   const [activeTab, setActiveTab] = useState(0);
