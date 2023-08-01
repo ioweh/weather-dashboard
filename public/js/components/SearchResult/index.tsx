@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import './index.less';
 import { useNavigate } from 'react-router-dom';
@@ -26,9 +26,9 @@ const SearchResult = ({cityWithForecast, addToFavorites}): JSX.Element => {
     className='searchResult'>
         <span>{name}, {country} ({formatCoords(lat)}, {formatCoords(lon)})</span>
         <img 
-        src='/gold_star.svg'
-        className='searchResult__favorite'
-        onClick={handleFavClick} />
+          src='/gold_star.svg'
+          className='searchResult__favorite'
+          onClick={handleFavClick} />
     </div>
     )
 }
