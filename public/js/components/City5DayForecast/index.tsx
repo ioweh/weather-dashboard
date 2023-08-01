@@ -13,7 +13,7 @@ const CityForecast = (): JSX.Element => {
 
     const navigate = useNavigate();
 
-    function kelvinToCelsius(kelvin) {
+    const kelvinToCelsius = (kelvin) => {
         // Check if the input is a valid number
         if (typeof kelvin !== 'number' || isNaN(kelvin)) {
             return "Invalid input. Please provide a valid number.";
@@ -25,15 +25,18 @@ const CityForecast = (): JSX.Element => {
         return `${celsius.toFixed(1)}°C`;
     }
 
-    function isIn24HoursInterval(city, currentCity) {
+    const isIn24HoursInterval = (city, currentCity) => {
         // e.q., the date time ends in 00:00:00; we find all the similar forecasts
         return city.dt_txt.endsWith(currentCity.dt_txt.slice(-8));
     }
 
-    function cityDetailsPage() {
+    const cityDetailsPage = (forecast) => {
+        const originalForecast = forecastData.list.indexOf(forecast);
+        const oneDayForecast = forecastData.list.slice(originalForecast, originalForecast + 8);
+
         navigate("/city-details", {state:
             {
-                forecastData,
+                oneDayForecast,
                 cityName: name ?? forecastData.city?.name,
             }
         });
@@ -44,7 +47,6 @@ const CityForecast = (): JSX.Element => {
             try {
                 const response = await axios.get(url);
                 setForecastData(response.data);
-                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -63,7 +65,7 @@ const CityForecast = (): JSX.Element => {
                     <h1 className='forecast__content__name'>{name ?? forecastData.city?.name}</h1>
                     <div className='forecast__content__date'>{forecast.dt_txt}</div>
                     <img
-                    onClick={cityDetailsPage}
+                    onClick={() => cityDetailsPage(forecast)}
                     src={`https://openweathermap.org/img/wn/${forecast.weather[0]?.icon}@2x.png`}
                     className='forecast__content__picture'/>
                     <div className='forecast__content__temperature'>{kelvinToCelsius(forecast.main?.temp)}</div>
