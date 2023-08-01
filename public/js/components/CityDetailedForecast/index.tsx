@@ -20,26 +20,15 @@ ChartJS.register(
   Legend,
 );
 
-import './index.less';
 import TabsComponent from '../TabsComponent';
+import './index.less';
+import { kelvinToCelsius } from '../../utils';
 
 const CityDetailedForecast = (): JSX.Element => {
     const location = useLocation();
 
     // get detailed forecast
     const { oneDayForecast, cityName } = location.state;
-
-    function kelvinToCelsius(kelvin) {
-        // Check if the input is a valid number
-        if (typeof kelvin !== 'number' || isNaN(kelvin)) {
-            return "Invalid input. Please provide a valid number.";
-        }
-        
-        // Convert Kelvin to Celsius
-        const celsius = kelvin - 273.15;
-        
-        return celsius.toFixed(1);
-    }
 
     const temperatureOptions = {
         responsive: true,
