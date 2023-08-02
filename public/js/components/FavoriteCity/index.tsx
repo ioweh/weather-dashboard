@@ -13,9 +13,10 @@ const FavoriteCity = ({favorite, removeFromFavorites}): JSX.Element => {
       className='favorite__item'
       onClick={() => navigate(`forecast/${latitude}/${longitude}/${city}/${country}`)}>
         {city}, {country}
-        <span
+        <img
+          src='/remove.png'
           className='favorite__item__close'
-          onClick={e => removeFromFavorites(e, favorite)}>x</span>
+          onClick={e => removeFromFavorites(e, favorite)} />
     </span>
     )
 }
