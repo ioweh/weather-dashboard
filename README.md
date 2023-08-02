@@ -25,3 +25,15 @@ Moving through the cities is possible by clicking on the left and right arrows o
 By clicking on the image for the weather, it's possible to go further into the details for the rendered city forecast. Once clicked, three charts are displayed on different tabs. The first tab contains results for temperature for the current day starting from the current time with 3 hour intervals. The second tab contains humidity data and the third tab the data for the wind speed in the same manner.
 
 The third-party components used in the application include better-react-carousel for moving through the 5-day forecast and react-chartjs-2 for showing charts for temperature, humidity, and wind.
+
+## Notes on the app structure
+
+For searching the cities, the openweathermap geocoding api were used:
+
+https://openweathermap.org/api/geocoding-api
+
+Once the city is found, its coordinates, that include latitude and longitude, are available. With those coordinates, it's possible to receive the data for the next 5 days starting from the current time with the 3-hour interval at this endpoint:
+
+https://openweathermap.org/forecast5
+
+The data are then transformed and rendered in the corresponding components.
