@@ -5,7 +5,7 @@ import './index.less';
 
 
 const SearchResult = ({cityWithForecast, addToFavorites}): JSX.Element => {
-    const { lat, lon, name, country} = cityWithForecast;
+    const { lat, lon, name, country, isFavorite} = cityWithForecast;
     const navigate = useNavigate();
 
     const formatCoords = (coord) => {
@@ -26,10 +26,14 @@ const SearchResult = ({cityWithForecast, addToFavorites}): JSX.Element => {
     onClick={city5DayForecastPage}
     className='searchResult'>
         <span>{name}, {country} ({formatCoords(lat)}, {formatCoords(lon)})</span>
-        <img 
+        {isFavorite ? <img 
           src='/gold_star.svg'
           className='searchResult__favorite'
-          onClick={handleFavClick} />
+          onClick={handleFavClick} /> :
+        <img
+          src='/empty_star.png'
+          className='searchResult__favorite'
+          onClick={handleFavClick} />}
     </div>
     )
 }

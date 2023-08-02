@@ -112,11 +112,17 @@ const CityList = (): JSX.Element => {
             onChange={(e) => handleInputChange(e.target.value)} />
         </span>
         {citiesWithForecast.map((cityWithForecast, index) =>
-        <SearchResult
-            key={index * cityWithForecast.lat * cityWithForecast.lon}
-            cityWithForecast={cityWithForecast}
-            addToFavorites={addToFavorites}/>
-        )}
+          {
+            const isFavorite = favoriteCities.some(fav =>
+                cityWithForecast.lat === fav.latitude
+                && cityWithForecast.lon === fav.longitude);
+            cityWithForecast = {...cityWithForecast, isFavorite};
+            return <SearchResult
+              key={index * cityWithForecast.lat * cityWithForecast.lon}
+              cityWithForecast={cityWithForecast}
+              addToFavorites={addToFavorites}/>
+          })
+        }
     </ div>
     );
 }
