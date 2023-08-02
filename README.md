@@ -8,7 +8,7 @@
 
 - `npm test`
 
-The tests also run on each push to the main branch.
+The tests also run on each push to the main branch. The results can be seen in the Actions tab of this repository.
 
 ## Live version
 
