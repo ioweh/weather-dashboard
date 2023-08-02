@@ -28,6 +28,7 @@ const SearchResult = (
     const { lat, lon, name, country, isFavorite} = cityWithForecast;
     const navigate = useNavigate();
 
+    // so that the coordinates had just 3 numbers after comma
     const formatCoords = (coord: number) => {
         return coord.toFixed(3);
     }

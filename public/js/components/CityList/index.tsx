@@ -16,6 +16,7 @@ const CityList = (): JSX.Element => {
 
     const [favoriteCities, setFavoriteCities] = useState<FavoriteCityInterface[]>([]);
 
+    // a key for local storage
     const storageKey = 'favoriteCities';
 
     let url = (cityName: string) =>
@@ -52,7 +53,9 @@ const CityList = (): JSX.Element => {
         const favExists = !!favoriteCities.filter((city) => JSON.stringify(city) === JSON.stringify(favCity)).length;
         if(!favExists) {
             const favoriteCitiesToSave = [...favoriteCities, favCity];
+            // change UI
             setFavoriteCities(favoriteCitiesToSave);
+            // save locally
             localStorage.setItem(storageKey, JSON.stringify(favoriteCitiesToSave));
         }
     }
@@ -61,7 +64,9 @@ const CityList = (): JSX.Element => {
         e.stopPropagation();
 
         const filteredFavorites = favoriteCities.filter((city) => JSON.stringify(city) !== JSON.stringify(fav));
+        // change UI
         setFavoriteCities(filteredFavorites);
+        // save locally
         localStorage.setItem(storageKey, JSON.stringify(filteredFavorites));
     }
 
