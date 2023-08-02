@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,27 +6,28 @@ import './index.less';
 import SearchResult from '../SearchResult';
 import FavoriteCity from '../FavoriteCity';
 
+import { debounce } from 'lodash';
+
 
 const CityList = (): JSX.Element => {
     const [citiesWithForecast, setCitiesWithForecast] = useState<any>([]);
     const [cityName, setCityName] = useState("London");
-    const [latitude, setLatitude] = useState<any>(null);
-    const [longitude, setLongitude] = useState<any>(null);
+
     const navigate = useNavigate();
 
     const [favoriteCities, setFavoriteCities] = useState<any>([]);
 
     const storageKey = 'favoriteCities';
 
-    let url = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=b35ef7587dfa519e18d36e86584481a2`;
+    let url = (cityName) => `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=b35ef7587dfa519e18d36e86584481a2`;
     
-    const getGeolocation = () => {
+    const checkGeolocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     // Handle successful geolocation retrieval
-                    setLatitude(position.coords.latitude);
-                    setLongitude(position.coords.longitude);
+                    const goTo5DayForecastPage = () => navigate(`/forecast/${position.coords.latitude}/${position.coords.longitude}`);
+                    goTo5DayForecastPage();
                 },
                 (error) => {
                     // Handle geolocation error
@@ -63,26 +64,33 @@ const CityList = (): JSX.Element => {
         localStorage.setItem(storageKey, JSON.stringify(filteredFavorites));
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(url);
-                setCitiesWithForecast(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        getGeolocation();
-        const goTo5DayForecastPage = () => navigate(`/forecast/${latitude}/${longitude}`);
-        if (latitude && longitude) {
-            goTo5DayForecastPage();
+    const fetchData = async (cityName) => {
+        try {
+            const response = await axios.get(url(cityName));
+            setCitiesWithForecast(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
+    };
+
+    const callFetch = useCallback(debounce((event) => {
+        fetchData(event);
+    }, 500), []);
+
+    // Debounce the input change handler with a specific delay (e.g., 500ms)
+    const handleInputChange = (name) => {
+        setCityName(name);
+
+        callFetch(name);
+    }
+
+    useEffect(() => {
+        checkGeolocation();
 
         loadStoredCities();
         
-        fetchData(); // Call the async function to fetch data when the component mounts
-    }, [cityName, latitude, longitude]);
+        fetchData(cityName); // Call the async function to fetch data when the component mounts
+    }, []);
 
     return (
     <div className="weather">
@@ -96,12 +104,12 @@ const CityList = (): JSX.Element => {
             )}
         </span>
         <span className='weather__search'>
-            <input
+          <input
             type="text"
             placeholder="Search"
-            value={cityName}
             className='weather__search__input'
-            onChange={(e) => setCityName(e.target.value)} />
+            value={cityName}
+            onChange={(e) => handleInputChange(e.target.value)} />
         </span>
         {citiesWithForecast.map((cityWithForecast, index) =>
         <SearchResult

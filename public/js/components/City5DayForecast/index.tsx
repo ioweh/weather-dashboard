@@ -44,7 +44,7 @@ const CityForecast = (): JSX.Element => {
         
         fetchData(); // Call the async function to fetch data when the component mounts
     }, []);
-    
+
     return (
     <>
     {forecastData.list &&
