@@ -47,7 +47,7 @@ const CityDetailedForecast = (): JSX.Element => {
 
     // get detailed forecast
     const { oneDayForecast, cityName }:
-    { oneDayForecast: ForecastInterface[], cityName: string} = location.state;
+    { oneDayForecast: ForecastInterface[], cityName: string} = location?.state;
 
     const temperatureColor = 'rgba(255, 99, 132, 0.5)';
     const humidityColor = 'rgba(140, 155, 181, 0.5)';
