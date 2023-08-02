@@ -1,5 +1,7 @@
 var path = require('path');
 
+var Dotenv = require('dotenv-webpack');
+
 module.exports = {
     entry: ["./public/js/main.tsx"],
     output: {
@@ -12,6 +14,9 @@ module.exports = {
             components: path.resolve(__dirname, './public/js/components'),
         },
     },
+    plugins: [
+        new Dotenv(),
+    ],
     module: { // Loaders apply transformations before
         rules: [
             {
@@ -50,6 +55,6 @@ module.exports = {
                     loader: 'less-loader', // compiles Less to CSS
                 }],
             },
-        ]
+        ],
     },
 };

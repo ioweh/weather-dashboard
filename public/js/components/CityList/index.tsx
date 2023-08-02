@@ -19,7 +19,7 @@ const CityList = (): JSX.Element => {
 
     const storageKey = 'favoriteCities';
 
-    let url = (cityName) => `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=b35ef7587dfa519e18d36e86584481a2`;
+    let url = (cityName) => `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${process.env.REACT_APP_SECRET_KEY}`;
     
     const checkGeolocation = () => {
         if (navigator.geolocation) {

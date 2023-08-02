@@ -11,7 +11,7 @@ const CityForecast = (): JSX.Element => {
     const { lat, lon, name } = useParams();
     const [forecastData, setForecastData] = useState<any>({});
     
-    let url = `https://api.openweathermap.org/data/2.5/forecast/?lat=${lat}&lon=${lon}&appid=b35ef7587dfa519e18d36e86584481a2`;
+    let url = `https://api.openweathermap.org/data/2.5/forecast/?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_SECRET_KEY}`;
 
     const navigate = useNavigate();
 

@@ -6,3 +6,7 @@ public/js/build/*
 
 # firebase
 .firebase/*
+
+# committing .env only for the review purposes, 
+# usually it's not committed
+# .env
