@@ -24,4 +24,4 @@ Moving through the cities is possible by clicking on the left and right arrows o
 
 By clicking on the image for the weather, it's possible to go further into the details for the rendered city forecast. Once clicked, three charts are displayed on different tabs. The first tab contains results for temperature for the current day starting from the current time with 3 hour intervals. The second tab contains humidity data and the third tab the data for the wind speed in the same manner.
 
-The third-party components used in the application include better-react-carousel for moving through the 5 day forecast and react-chartjs-2 for showing charts for temperature, humidity, and wind.
+The third-party components used in the application include better-react-carousel for moving through the 5-day forecast and react-chartjs-2 for showing charts for temperature, humidity, and wind.
