@@ -31,8 +31,8 @@ describe('Search result', () => {
         await act( async () => ({container} = render(<SearchResult
             cityWithForecast={cityWithForecast}
             addToFavorites={addToFavorites} />)));
-        const removeItemButton = container.getElementsByClassName('searchResult__favorite')[0];
-        fireEvent.click(removeItemButton);
+        const addToFavoritesButton = container.getElementsByClassName('searchResult__favorite')[0];
+        fireEvent.click(addToFavoritesButton);
         
         expect(addToFavorites).toHaveBeenCalled();
     });
