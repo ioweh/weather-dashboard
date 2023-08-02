@@ -27,7 +27,7 @@ const FavoriteCity = ({favorite, removeFromFavorites}:
         {city}, {country}
         <img
           src='/remove.png'
-          className='favorite__item__close'
+          className='favorite__item__remove'
           onClick={e => removeFromFavorites(e, favorite)} />
     </span>
     )
