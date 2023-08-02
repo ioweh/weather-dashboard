@@ -1,12 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { debounce } from 'lodash';
 
 import './index.less';
 import SearchResult from '../SearchResult';
 import FavoriteCity from '../FavoriteCity';
-
-import { debounce } from 'lodash';
 
 
 const CityList = (): JSX.Element => {
@@ -96,8 +95,9 @@ const CityList = (): JSX.Element => {
     <div className="weather">
         <span className='weather__header'>Find weather in your city</span>
         <span className='weather__favorites'>
-            {favoriteCities.map(fav => 
+            {favoriteCities.map((fav, index) => 
             <FavoriteCity
+              key={index}
               favorite={fav}
               removeFromFavorites={removeFromFavorites}
             />

@@ -49,7 +49,9 @@ const CityForecast = (): JSX.Element => {
     <>
     {forecastData.list &&
     <Carousel>
-        {forecastData.list.filter(forecast => is24HoursAhead(forecast, forecastData.list[0])).map(forecast => <Carousel.Item>
+        {forecastData.list.filter(forecast => is24HoursAhead(forecast, forecastData.list[0])).map((forecast, index) =>
+            <Carousel.Item
+            key={index}>
             <div className='forecast'>
                 <div className='forecast__content'>
                     <h1 className='forecast__content__name'>{name ?? forecastData.city?.name}</h1>
