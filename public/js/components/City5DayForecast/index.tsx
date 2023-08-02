@@ -5,22 +5,31 @@ import Carousel from 'better-react-carousel'
 
 import './index.less';
 import { kelvinToCelsius } from '../../utils';
+import { ForecastInterface } from '../CityDetailedForecast';
+
+
+interface ForecastDataInterface {
+    city: {
+        name: string,
+    };
+    list: ForecastInterface[];
+}
 
 
 const CityForecast = (): JSX.Element => {
     const { lat, lon, name } = useParams();
-    const [forecastData, setForecastData] = useState<any>({});
+    const [forecastData, setForecastData] = useState<ForecastDataInterface>({ city: { name: ""}, list: []});
     
     let url = `https://api.openweathermap.org/data/2.5/forecast/?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_SECRET_KEY}`;
 
     const navigate = useNavigate();
 
-    const is24HoursAhead = (city, currentCity) => {
+    const is24HoursAhead = (city: ForecastInterface, currentCity: ForecastInterface) => {
         // e.q., the date time ends in 00:00:00; we find all the similar forecasts
         return city.dt_txt.endsWith(currentCity.dt_txt.slice(-8));
     }
 
-    const cityDetailsPage = (forecast) => {
+    const cityDetailsPage = (forecast: ForecastInterface) => {
         const originalForecast = forecastData.list.indexOf(forecast);
         const oneDayForecast = forecastData.list.slice(originalForecast, originalForecast + 8);
 

@@ -4,28 +4,30 @@ import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
 import './index.less';
-import SearchResult from '../SearchResult';
-import FavoriteCity from '../FavoriteCity';
+import SearchResult, { CityWithForecastInterface } from '../SearchResult';
+import FavoriteCity, { FavoriteCityInterface } from '../FavoriteCity';
 
 
 const CityList = (): JSX.Element => {
-    const [citiesWithForecast, setCitiesWithForecast] = useState<any>([]);
+    const [citiesWithForecast, setCitiesWithForecast] = useState<CityWithForecastInterface[]>([]);
     const [cityName, setCityName] = useState("London");
 
     const navigate = useNavigate();
 
-    const [favoriteCities, setFavoriteCities] = useState<any>([]);
+    const [favoriteCities, setFavoriteCities] = useState<FavoriteCityInterface[]>([]);
 
     const storageKey = 'favoriteCities';
 
-    let url = (cityName) => `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${process.env.REACT_APP_SECRET_KEY}`;
+    let url = (cityName: string) =>
+      `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${process.env.REACT_APP_SECRET_KEY}`;
     
     const checkGeolocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     // Handle successful geolocation retrieval
-                    const goTo5DayForecastPage = () => navigate(`/forecast/${position.coords.latitude}/${position.coords.longitude}`);
+                    const goTo5DayForecastPage = () =>
+                      navigate(`/forecast/${position.coords.latitude}/${position.coords.longitude}`);
                     goTo5DayForecastPage();
                 },
                 (error) => {
@@ -45,8 +47,8 @@ const CityList = (): JSX.Element => {
         }
     }
 
-    const addToFavorites = (city, country, latitude, longitude) => {
-        const favCity = {city, country, latitude, longitude};
+    const addToFavorites = (city: string, country: string, latitude: number, longitude: number) => {
+        const favCity: FavoriteCityInterface = {city, country, latitude, longitude};
         const favExists = !!favoriteCities.filter((city) => JSON.stringify(city) === JSON.stringify(favCity)).length;
         if(!favExists) {
             const favoriteCitiesToSave = [...favoriteCities, favCity];
@@ -55,7 +57,7 @@ const CityList = (): JSX.Element => {
         }
     }
 
-    const removeFromFavorites = (e, fav) => {
+    const removeFromFavorites = (e: React.MouseEvent, fav: FavoriteCityInterface) => {
         e.stopPropagation();
 
         const filteredFavorites = favoriteCities.filter((city) => JSON.stringify(city) !== JSON.stringify(fav));
@@ -63,7 +65,7 @@ const CityList = (): JSX.Element => {
         localStorage.setItem(storageKey, JSON.stringify(filteredFavorites));
     }
 
-    const fetchData = async (cityName) => {
+    const fetchData = async (cityName: string) => {
         try {
             const response = await axios.get(url(cityName));
             setCitiesWithForecast(response.data);
@@ -72,12 +74,12 @@ const CityList = (): JSX.Element => {
         }
     };
 
-    const callFetch = useCallback(debounce((event) => {
-        fetchData(event);
+    const callFetch = useCallback(debounce((name) => {
+        fetchData(name);
     }, 500), []);
 
     // Debounce the input change handler with a specific delay (e.g., 500ms)
-    const handleInputChange = (name) => {
+    const handleInputChange = (name: string) => {
         setCityName(name);
 
         callFetch(name);

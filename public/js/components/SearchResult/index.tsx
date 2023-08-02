@@ -4,11 +4,31 @@ import { useNavigate } from 'react-router-dom';
 import './index.less';
 
 
-const SearchResult = ({cityWithForecast, addToFavorites}): JSX.Element => {
+export interface CityWithForecastInterface {
+    lat: number;
+    lon: number;
+    name: string;
+    country: string;
+    isFavorite?: boolean;
+}
+
+
+const SearchResult = (
+    {cityWithForecast, addToFavorites}:
+    {
+        cityWithForecast: CityWithForecastInterface,
+        addToFavorites: (
+            name: string,
+            country: string,
+            lat: number,
+            lon: number,
+        ) => void,
+    }
+    ): JSX.Element => {
     const { lat, lon, name, country, isFavorite} = cityWithForecast;
     const navigate = useNavigate();
 
-    const formatCoords = (coord) => {
+    const formatCoords = (coord: number) => {
         return coord.toFixed(3);
     }
 
@@ -16,7 +36,7 @@ const SearchResult = ({cityWithForecast, addToFavorites}): JSX.Element => {
         navigate(`forecast/${lat}/${lon}/${name}/${country}`)
     }
 
-    const handleFavClick = (e) => {
+    const handleFavClick = (e: React.MouseEvent) => {
         e.stopPropagation();
         addToFavorites(name, country, lat, lon);
     };

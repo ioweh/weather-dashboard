@@ -20,22 +20,40 @@ ChartJS.register(
   Legend,
 );
 
-import TabsComponent from '../TabsComponent';
+import TabsComponent, { TabsDataInterface } from '../TabsComponent';
 import './index.less';
 import { kelvinToCelsius } from '../../utils';
+
+
+export interface ForecastInterface {
+    dt_txt: string;
+    main: {
+        temp: number;
+        humidity: number;
+        pressure?: number;
+    };
+    wind: {
+        speed: number;
+    };
+    weather: {
+        description: string,
+        icon: string
+    }[];
+}
 
 
 const CityDetailedForecast = (): JSX.Element => {
     const location = useLocation();
 
     // get detailed forecast
-    const { oneDayForecast, cityName } = location.state;
+    const { oneDayForecast, cityName }:
+    { oneDayForecast: ForecastInterface[], cityName: string} = location.state;
 
     const temperatureColor = 'rgba(255, 99, 132, 0.5)';
     const humidityColor = 'rgba(140, 155, 181, 0.5)';
     const windColor = 'rgba(171, 185, 162, 0.5)';
 
-    const createChartOptions = (header) => {
+    const createChartOptions = (header: string) => {
         return {
             responsive: true,
             plugins: {
@@ -50,7 +68,7 @@ const CityDetailedForecast = (): JSX.Element => {
         }
     }
 
-    const createChartData = (data, backgroundColor) => {
+    const createChartData = (data: number[], backgroundColor: string) => {
         return {
             labels,
             datasets: [
@@ -86,7 +104,7 @@ const CityDetailedForecast = (): JSX.Element => {
         windColor,
     );
 
-    const tabsData = [
+    const tabsData: TabsDataInterface[] = [
         {
             label: 'Temperature',
             content: <Bar options={temperatureOptions} data={temperatureData} />,

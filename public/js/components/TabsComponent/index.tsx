@@ -3,10 +3,16 @@ import React, { useState } from 'react';
 import './index.less';
 
 
-const TabsComponent = ({ tabsData }) => {
+export interface TabsDataInterface {
+    label: string;
+    content: React.JSX.Element;
+}
+
+
+const TabsComponent = ({ tabsData } : { tabsData: TabsDataInterface[] }) => {
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleTabClick = (index) => {
+  const handleTabClick = (index: number) => {
     setActiveTab(index);
   };
 
