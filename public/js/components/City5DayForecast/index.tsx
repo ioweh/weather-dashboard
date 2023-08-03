@@ -57,7 +57,7 @@ const CityForecast = (): JSX.Element => {
     return (
     <>
     {forecastData.list &&
-    <Carousel mobileBreakpoint={1600}>
+    <Carousel mobileBreakpoint={1000}>
         {forecastData.list.filter(forecast => is24HoursAhead(forecast, forecastData.list[0])).map((forecast, index) =>
             <Carousel.Item
             key={index}>
