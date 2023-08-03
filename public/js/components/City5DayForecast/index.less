@@ -1,4 +1,5 @@
 @icon-height: 3rem;
+@icon-mobile-height: 6rem;
 @weather-description-distance: 1rem;
 
 /* for the carousel item to take the whole width instead of 90% */
@@ -11,6 +12,7 @@ div[class^="Carousel__Rail"] {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+  font-size: 4rem;
 
   &__content {
     display: flex;
@@ -76,6 +78,49 @@ div[class^="Carousel__Rail"] {
       &__picture {
         height: @icon-height;
         margin-bottom: @weather-description-distance;
+      }
+    }
+  }
+}
+
+@media only screen and (hover: none) and (orientation: portrait), (pointer: coarse) or (pointer: none) {
+  .forecast {
+    font-size: 4rem;
+
+    &__content {
+      font-size: 4rem;
+
+      &__name {
+        font-size: 3rem;
+      }
+      &__date {
+        font-size: 4rem;
+      }
+      &__temperature {
+        font-size: 4rem;
+      }
+      &__description {
+        font-size: 4rem;
+      }
+    }
+    &__footer{
+      font-size: 3rem;
+      &__humidity {
+        &__picture {
+          height: @icon-mobile-height;
+        }
+      }
+      
+      &__wind-speed {
+        &__picture {
+          height: @icon-mobile-height;
+        }
+      }
+      
+      &__pressure {
+        &__picture {
+          height: @icon-mobile-height;
+        }
       }
     }
   }
