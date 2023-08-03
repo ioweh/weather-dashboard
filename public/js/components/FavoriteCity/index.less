@@ -1,4 +1,4 @@
-  .favorite__item {
+.favorite__item {
     background: lightgray;
     width: fit-content;
     height: 3rem;
@@ -15,5 +15,17 @@
         margin-left: auto;
         height: 2rem;
         padding-left: 2rem;
+    }
+}
+
+@media only screen and (hover: none) and (orientation: portrait), (pointer: coarse) or (pointer: none) {
+    .favorite__item {
+      height: 4.5rem;
+      border-radius: 40px;
+      padding-left: 1.5rem;
+
+      &__remove {
+        height: 3rem;
+      }
     }
 }
